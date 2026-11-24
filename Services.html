@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verdant - Services</title>
+  <style>
+    :root { --green:#167a4a; --green-dark:#0d5c37; --green-soft:#eaf7ef; --text:#153126; --white:#fff; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { min-height:100vh; font-family:Inter,"Segoe UI",Arial,sans-serif; color:var(--text); background:linear-gradient(135deg,#fff 0%,#f7fcf9 100%); }
+    header { width:min(1180px,calc(100% - 48px)); height:96px; margin:auto; display:flex; align-items:center; justify-content:space-between; }
+    .brand { display:inline-flex; align-items:center; gap:11px; color:var(--green-dark); text-decoration:none; }
+    .brand-mark { width:42px; height:42px; display:grid; place-items:center; border-radius:12px; background:var(--green); box-shadow:0 8px 24px rgba(22,122,74,.18); }
+    .brand-name { font-size:27px; font-weight:750; letter-spacing:-1px; }
+    nav { display:flex; align-items:center; gap:34px; }
+    nav a { color:#51635a; text-decoration:none; font-size:15px; font-weight:650; }
+    nav a.active { color:var(--green); }
+    nav a.login { padding:12px 22px; border:1px solid var(--green); border-radius:999px; color:var(--green); }
+    main { width:min(1180px,calc(100% - 48px)); margin:70px auto; }
+    h1 { max-width:680px; font-size:64px; line-height:1; letter-spacing:-3px; }
+    h1 span { color:var(--green); }
+    p { max-width:620px; margin-top:22px; color:#63736b; font-size:18px; line-height:1.7; }
+  </style>
+    <link rel="stylesheet" href="verdant-pages.css">
+  </head>
+<body>
+  <header>
+    <a class="brand" href="Home.html" aria-label="Verdant home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="27" height="27" viewBox="0 0 32 32" fill="none">
+          <path d="M17 27C16.7 20.2 19.4 14.2 25.9 8.7C26.5 8.2 27.4 8.7 27.3 9.5C26.5 17.2 23.1 22.5 17.9 26.1" fill="#DDF5E5"/>
+          <path d="M15.4 27C14.9 21.5 12.1 17.3 6.8 14.1C6.1 13.7 5.3 14.3 5.5 15.1C6.8 21.3 10.2 25.4 15.4 27Z" fill="#fff"/>
+        </svg>
+      </span>
+      <span class="brand-name">Verdant</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="Home.html">Home</a>
+      <a class="active" href="Services.html">Services</a>
+      <a href="Support.html">Customer Support</a>
+      <a class="login" href="Login.html">Login</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Financial services built for <span>your future.</span></h1>
+    <p>Explore Verdant's saving, investing, financial planning, and portfolio management solutions.</p>
+  </main>
+  <script src="verdant-app.js"></script>
+</body>
+</html>

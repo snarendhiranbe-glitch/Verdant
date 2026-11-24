@@ -1,1 +1,2256 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verdant Finance</title>
+  <style>
+    :root {
+      --green: #167a4a;
+      --green-dark: #0d5c37;
+      --green-soft: #eaf7ef;
+      --text: #153126;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--white);
+    }
+
+    .animated-background {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 85% 15%, rgba(211, 239, 220, 0.7), transparent 22rem),
+        linear-gradient(135deg, #ffffff 0%, #fbfefc 55%, #f2faf5 100%);
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(1px);
+      animation: float 10s ease-in-out infinite;
+    }
+
+    .shape-one {
+      right: -7rem;
+      bottom: 5%;
+      width: 22rem;
+      height: 22rem;
+      background: rgba(193, 231, 206, 0.38);
+      animation-duration: 12s;
+    }
+
+    .shape-two {
+      left: -6rem;
+      top: 18%;
+      width: 14rem;
+      height: 14rem;
+      background: rgba(224, 243, 230, 0.7);
+      animation-delay: -4s;
+    }
+
+    .shape-three {
+      right: 24%;
+      bottom: -7rem;
+      width: 10rem;
+      height: 10rem;
+      background: rgba(165, 215, 183, 0.25);
+      animation-delay: -7s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(1.5rem, -1.8rem, 0) scale(1.08); }
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      width: 100%;
+      height: 96px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 max(24px, calc((100% - 1180px) / 2));
+      background: rgba(255, 255, 255, 0.88);
+      border-bottom: 1px solid transparent;
+      backdrop-filter: blur(16px);
+      transition: height 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    header.scrolled {
+      height: 78px;
+      border-bottom-color: #e1ebe4;
+      box-shadow: 0 10px 34px rgba(35, 82, 55, 0.08);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--green-dark);
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--green);
+      box-shadow: 0 8px 24px rgba(22, 122, 74, 0.18);
+    }
+
+    .brand-mark svg {
+      width: 27px;
+      height: 27px;
+    }
+
+    .brand-name {
+      font-size: 27px;
+      font-weight: 750;
+      letter-spacing: -1px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+    }
+
+    nav a {
+      position: relative;
+      color: #51635a;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 650;
+      transition: color 180ms ease;
+    }
+
+    nav a:not(.login)::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 100%;
+      bottom: -8px;
+      height: 2px;
+      background: var(--green);
+      transition: right 180ms ease;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--green);
+    }
+
+    nav a:hover::after,
+    nav a.active::after {
+      right: 0;
+    }
+
+    nav a.login {
+      padding: 12px 22px;
+      border: 1px solid var(--green);
+      border-radius: 999px;
+      color: var(--green);
+    }
+
+    nav a.login:hover {
+      color: var(--white);
+      background: var(--green);
+      box-shadow: 0 8px 20px rgba(22, 122, 74, 0.16);
+    }
+
+    .menu-button {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--green-soft);
+      color: var(--green);
+      cursor: pointer;
+      font-size: 24px;
+    }
+
+    main {
+      min-height: calc(100vh - 96px);
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      align-items: center;
+      gap: 64px;
+      padding: 138px 0 88px;
+    }
+
+    .hero-content {
+      max-width: 650px;
+      animation: reveal 700ms ease-out both;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 8px 12px;
+      border: 1px solid #d3eadc;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #35a66b;
+      box-shadow: 0 0 0 5px rgba(53, 166, 107, 0.11);
+    }
+
+    h1 {
+      max-width: 620px;
+      font-size: clamp(48px, 6vw, 76px);
+      line-height: 0.98;
+      letter-spacing: -4px;
+      color: #163729;
+    }
+
+    h1 span {
+      color: var(--green);
+    }
+
+    .hero-description {
+      max-width: 580px;
+      margin-top: 24px;
+      color: #5d6e65;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .email-signup {
+      max-width: 580px;
+      height: 58px;
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px;
+      border: 1px solid #d7e6dd;
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 12px 30px rgba(47, 112, 75, 0.08);
+    }
+
+    .email-signup input {
+      min-width: 0;
+      flex: 1;
+      height: 44px;
+      border: 0;
+      outline: 0;
+      padding: 0 12px;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      font-size: 15px;
+    }
+
+    .email-signup input::placeholder {
+      color: #8a9a91;
+    }
+
+    .email-signup button {
+      height: 44px;
+      border: 0;
+      border-radius: 9px;
+      padding: 0 20px;
+      background: var(--green);
+      color: var(--white);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 750;
+      cursor: pointer;
+      transition: background 180ms ease, transform 180ms ease;
+    }
+
+    .email-signup button:hover {
+      background: var(--green-dark);
+      transform: translateY(-1px);
+    }
+
+    .email-status {
+      min-height: 18px;
+      margin-top: 8px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 52px;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 0 24px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 750;
+      text-decoration: none;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .button-primary {
+      background: var(--green);
+      color: var(--white);
+      box-shadow: 0 12px 28px rgba(22, 122, 74, 0.18);
+    }
+
+    .button-secondary {
+      border: 1px solid #d7e7dd;
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--green-dark);
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(22, 122, 74, 0.16);
+    }
+
+    .hero-proof {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .proof-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #63736b;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .proof-item strong {
+      color: var(--text);
+      font-size: 17px;
+    }
+
+    .proof-divider {
+      width: 1px;
+      height: 34px;
+      background: #dbe8e0;
+    }
+
+    .finance-visual {
+      position: relative;
+      min-height: 440px;
+      animation: reveal 850ms 120ms ease-out both;
+    }
+
+    .hero-photo-wrap {
+      position: absolute;
+      right: 18px;
+      bottom: 0;
+      width: 390px;
+      height: 420px;
+      border-radius: 220px 220px 28px 28px;
+      overflow: hidden;
+      border: 8px solid rgba(255, 255, 255, 0.82);
+      background: var(--green-soft);
+      box-shadow: 0 28px 70px rgba(47, 112, 75, 0.16);
+    }
+
+    .hero-photo {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center 20%;
+    }
+
+    .float-card {
+      position: absolute;
+      z-index: 2;
+      border: 1px solid rgba(210, 232, 219, 0.95);
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 18px 45px rgba(47, 112, 75, 0.14);
+      backdrop-filter: blur(10px);
+      animation: cardFloat 4.5s ease-in-out infinite;
+    }
+
+    .savings-card {
+      left: -10px;
+      top: 70px;
+      width: 205px;
+      border-radius: 18px;
+      padding: 16px 18px;
+    }
+
+    .growth-card {
+      right: -12px;
+      bottom: 38px;
+      width: 190px;
+      border-radius: 18px;
+      padding: 16px 18px;
+      animation-delay: -2.2s;
+    }
+
+    .float-label {
+      color: #738179;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .float-value {
+      display: block;
+      margin-top: 5px;
+      color: var(--green-dark);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .leaf-badge {
+      position: absolute;
+      z-index: 3;
+      left: 54px;
+      bottom: 24px;
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border: 5px solid rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      font-size: 24px;
+      box-shadow: 0 12px 30px rgba(22, 122, 74, 0.22);
+      animation: cardFloat 5.2s -1s ease-in-out infinite;
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(52px);
+      transition:
+        opacity 750ms ease-out,
+        transform 750ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .scroll-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes grow {
+      from { transform: scaleY(0); }
+      to { transform: scaleY(1); }
+    }
+
+    @keyframes cardFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .company-metrics {
+      width: 100%;
+      background: #111512;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .metrics-inner {
+      width: min(1180px, calc(100% - 48px));
+      min-height: 150px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: center;
+    }
+
+    .metric {
+      min-height: 74px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 38px;
+      border-right: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .metric:first-child {
+      padding-left: 0;
+    }
+
+    .metric:last-child {
+      border-right: 0;
+    }
+
+    .metric-value {
+      color: #ffffff;
+      font-size: clamp(30px, 3vw, 42px);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -2px;
+    }
+
+    .metric-label {
+      margin-top: 10px;
+      color: #b4beb7;
+      font-size: 14px;
+      line-height: 1.35;
+      font-weight: 650;
+    }
+
+    .planning-section {
+      background: #f7faf8;
+      padding: 96px 0;
+    }
+
+    .planning-inner {
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .retirement-card,
+    .investment-card {
+      min-height: 460px;
+      border-radius: 28px;
+      overflow: hidden;
+    }
+
+    .retirement-card {
+      position: relative;
+      padding: 38px;
+      background: #edf6f0;
+      border: 1px solid #ddebe2;
+    }
+
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .section-kicker::before {
+      content: "";
+      width: 24px;
+      height: 2px;
+      background: var(--green);
+    }
+
+    .retirement-card h2,
+    .investment-card h2 {
+      max-width: 480px;
+      margin-top: 14px;
+      color: #163729;
+      font-size: clamp(36px, 4vw, 54px);
+      line-height: 1.02;
+      letter-spacing: -2.8px;
+    }
+
+    .retirement-card h2 span,
+    .investment-card h2 span {
+      color: var(--green);
+    }
+
+    .card-brand {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid #d9e8df;
+      box-shadow: 0 10px 24px rgba(47, 112, 75, 0.1);
+    }
+
+    .card-brand svg {
+      width: 29px;
+      height: 29px;
+    }
+
+    .card-description {
+      max-width: 410px;
+      margin-top: 14px;
+      color: #66776e;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .plan-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+      color: var(--green-dark);
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .plan-link span {
+      transition: transform 180ms ease;
+    }
+
+    .plan-link:hover span {
+      transform: translateX(5px);
+    }
+
+    .retirement-chart {
+      position: absolute;
+      left: 38px;
+      right: 38px;
+      bottom: 34px;
+      height: 220px;
+      padding: 18px 20px 12px;
+      border: 1px solid #dce9e1;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 18px 44px rgba(47, 112, 75, 0.1);
+    }
+
+    .chart-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      color: #718078;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .chart-heading strong {
+      display: block;
+      margin-top: 4px;
+      color: #163729;
+      font-size: 22px;
+      letter-spacing: -1px;
+    }
+
+    .chart-heading span:last-child {
+      color: var(--green);
+    }
+
+    .retirement-chart svg {
+      width: 100%;
+      height: 142px;
+      overflow: visible;
+    }
+
+    .chart-grid {
+      stroke: #e4ede7;
+      stroke-width: 1;
+    }
+
+    .chart-area {
+      fill: url("#retirementFill");
+      opacity: 0;
+      animation: areaReveal 1.2s 400ms ease-out forwards;
+    }
+
+    .chart-line {
+      fill: none;
+      stroke: var(--green);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 500;
+      stroke-dashoffset: 500;
+      animation: drawLine 1.8s 300ms ease-out forwards;
+    }
+
+    .chart-point {
+      fill: #ffffff;
+      stroke: var(--green);
+      stroke-width: 4;
+      transform-origin: center;
+      animation: pointPulse 2.4s ease-in-out infinite;
+    }
+
+    .investment-card {
+      position: relative;
+      padding: 38px;
+      background: #102619;
+      color: #ffffff;
+    }
+
+    .investment-card .section-kicker {
+      color: #86caa2;
+    }
+
+    .investment-card .section-kicker::before {
+      background: #86caa2;
+    }
+
+    .investment-card h2 {
+      color: #ffffff;
+    }
+
+    .investment-card h2 span {
+      color: #86caa2;
+    }
+
+    .investment-card .card-brand {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: none;
+    }
+
+    .investment-card .card-description {
+      color: #bfd0c5;
+    }
+
+    .investment-card .plan-link {
+      color: #86caa2;
+    }
+
+    .investment-animation {
+      position: absolute;
+      left: 38px;
+      right: 38px;
+      bottom: 34px;
+      height: 220px;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 78% 30%, rgba(134, 202, 162, 0.15), transparent 110px),
+        rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .growth-orbit {
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      right: 18px;
+      top: 5px;
+      border: 1px solid rgba(134, 202, 162, 0.22);
+      border-radius: 50%;
+      animation: orbitSpin 14s linear infinite;
+    }
+
+    .growth-orbit::before,
+    .growth-orbit::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: #86caa2;
+      box-shadow: 0 0 18px rgba(134, 202, 162, 0.7);
+    }
+
+    .growth-orbit::before {
+      width: 10px;
+      height: 10px;
+      left: 20px;
+      top: 34px;
+    }
+
+    .growth-orbit::after {
+      width: 7px;
+      height: 7px;
+      right: 28px;
+      bottom: 26px;
+    }
+
+    .growth-core {
+      position: absolute;
+      right: 82px;
+      top: 69px;
+      width: 82px;
+      height: 82px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #65b886, #167a4a);
+      color: #ffffff;
+      font-size: 19px;
+      font-weight: 800;
+      box-shadow: 0 16px 42px rgba(83, 172, 123, 0.26);
+      animation: corePulse 3s ease-in-out infinite;
+    }
+
+    .growth-bars {
+      position: absolute;
+      left: 26px;
+      bottom: 24px;
+      width: 180px;
+      height: 120px;
+      display: flex;
+      align-items: flex-end;
+      gap: 9px;
+    }
+
+    .growth-bars span {
+      width: 22px;
+      border-radius: 8px 8px 2px 2px;
+      background: linear-gradient(180deg, #86caa2, #3b9062);
+      transform-origin: bottom;
+      animation: growBar 2.2s ease-in-out infinite alternate;
+    }
+
+    .growth-bars span:nth-child(1) { height: 32%; animation-delay: -1.2s; }
+    .growth-bars span:nth-child(2) { height: 48%; animation-delay: -0.8s; }
+    .growth-bars span:nth-child(3) { height: 68%; animation-delay: -0.4s; }
+    .growth-bars span:nth-child(4) { height: 88%; }
+
+    @keyframes drawLine {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes areaReveal {
+      to { opacity: 1; }
+    }
+
+    @keyframes pointPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.35); }
+    }
+
+    @keyframes orbitSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes corePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    @keyframes growBar {
+      from { transform: scaleY(0.55); opacity: 0.65; }
+      to { transform: scaleY(1); opacity: 1; }
+    }
+
+    .why-section {
+      background: #ffffff;
+      padding: 110px 0;
+    }
+
+    .why-inner {
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 0.78fr 1.22fr;
+      align-items: center;
+      gap: 64px;
+    }
+
+    .market-panel {
+      position: relative;
+      min-height: 430px;
+      padding: 34px;
+      overflow: hidden;
+      border: 1px solid #dde9e1;
+      border-radius: 28px;
+      background: linear-gradient(145deg, #f6fbf8, #eaf5ee);
+      box-shadow: 0 24px 60px rgba(47, 112, 75, 0.09);
+    }
+
+    .market-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .market-heading span {
+      color: #75867c;
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .market-heading strong {
+      display: block;
+      margin-top: 7px;
+      color: #163729;
+      font-size: 34px;
+      letter-spacing: -2px;
+    }
+
+    .market-change {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #daf1e3;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .market-chart {
+      position: absolute;
+      left: 34px;
+      right: 34px;
+      bottom: 58px;
+      height: 220px;
+      border-bottom: 1px solid #cfe0d5;
+    }
+
+    .market-chart svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .market-chart .grid-line {
+      stroke: #dfe9e3;
+      stroke-width: 1;
+    }
+
+    .market-chart .market-line {
+      fill: none;
+      stroke: var(--green);
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 700;
+      stroke-dashoffset: 700;
+      animation: drawMarketLine 2s ease-out forwards;
+    }
+
+    .market-chart .market-fill {
+      fill: url("#marketFill");
+      opacity: 0;
+      animation: areaReveal 1.2s 500ms ease-out forwards;
+    }
+
+    .market-note {
+      position: absolute;
+      left: 34px;
+      bottom: 24px;
+      color: #748279;
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .why-copy h2 {
+      margin-top: 12px;
+      color: #163729;
+      font-size: clamp(44px, 5vw, 68px);
+      line-height: 1;
+      letter-spacing: -3.5px;
+    }
+
+    .why-copy h2 span {
+      color: var(--green);
+    }
+
+    .why-copy > p {
+      max-width: 520px;
+      margin-top: 20px;
+      color: #66776e;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+
+    .why-grid {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .why-card {
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 22px;
+      border: 1px solid #dde9e1;
+      border-radius: 18px;
+      background: #ffffff;
+      color: var(--text);
+      text-decoration: none;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .why-card:hover {
+      transform: translateY(-5px);
+      border-color: #bdd8c7;
+      box-shadow: 0 16px 34px rgba(47, 112, 75, 0.11);
+    }
+
+    .why-card-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .why-card-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .why-card-title span {
+      color: var(--green);
+      transition: transform 180ms ease;
+    }
+
+    .why-card:hover .why-card-title span {
+      transform: translateX(4px);
+    }
+
+    @keyframes drawMarketLine {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .contact-section {
+      background: #ffffff;
+      padding: 0 24px 96px;
+    }
+
+    .contact-pallet {
+      position: relative;
+      width: min(1180px, 100%);
+      min-height: 220px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      overflow: hidden;
+      padding: 44px 52px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #167a4a 0%, #0d5c37 100%);
+      color: #ffffff;
+      box-shadow: 0 24px 60px rgba(22, 122, 74, 0.18);
+    }
+
+    .contact-pallet::before,
+    .contact-pallet::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.07);
+      animation: contactFloat 7s ease-in-out infinite;
+    }
+
+    .contact-pallet::before {
+      width: 260px;
+      height: 260px;
+      right: -90px;
+      top: -170px;
+    }
+
+    .contact-pallet::after {
+      width: 180px;
+      height: 180px;
+      right: 180px;
+      bottom: -150px;
+      animation-delay: -3.5s;
+    }
+
+    .contact-copy {
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-copy span {
+      color: #cce8d6;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .contact-copy h2 {
+      margin-top: 8px;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.05;
+      letter-spacing: -2.5px;
+    }
+
+    .contact-button {
+      position: relative;
+      z-index: 1;
+      min-width: 170px;
+      height: 54px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 12px;
+      background: #ffffff;
+      color: var(--green-dark);
+      font-size: 15px;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .contact-button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.16);
+    }
+
+    @keyframes contactFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-12px) scale(1.06); }
+    }
+
+    .services-section {
+      position: relative;
+      min-height: 620px;
+      overflow: hidden;
+      padding: 88px 24px 0;
+      background:
+        radial-gradient(circle at 82% 12%, rgba(139, 111, 192, 0.22), transparent 260px),
+        radial-gradient(circle at 12% 80%, rgba(113, 85, 163, 0.18), transparent 220px),
+        #241735;
+    }
+
+    .services-inner {
+      position: relative;
+      z-index: 2;
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .services-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 30px;
+      margin-bottom: 34px;
+    }
+
+    .services-heading h2 {
+      max-width: 620px;
+      color: #ffffff;
+      font-size: clamp(42px, 5vw, 66px);
+      line-height: 1;
+      letter-spacing: -3.5px;
+    }
+
+    .services-heading h2 span {
+      color: #b69adf;
+    }
+
+    .services-heading p {
+      max-width: 360px;
+      color: #c9bed4;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .service-card {
+      position: relative;
+      min-height: 290px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.075);
+      color: #ffffff;
+      backdrop-filter: blur(12px);
+      transition: none;
+    }
+
+    .service-card::before {
+      content: "";
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      right: -70px;
+      bottom: -70px;
+      border-radius: 50%;
+      background: rgba(182, 154, 223, 0.13);
+      transition: transform 300ms ease;
+    }
+
+    .service-card:hover {
+      transform: none;
+      border-color: rgba(255, 255, 255, 0.11);
+      background: rgba(255, 255, 255, 0.075);
+    }
+
+    .service-card:hover::before {
+      transform: scale(1.35);
+    }
+
+    .service-card-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #cbb2ee;
+    }
+
+    .service-card-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .service-card h3 {
+      max-width: 220px;
+      margin-top: auto;
+      font-size: 25px;
+      line-height: 1.08;
+      letter-spacing: -1.2px;
+    }
+
+    .service-card p {
+      margin-top: 12px;
+      color: #c9bed4;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .service-card-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 18px;
+      color: #d9c7f3;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .service-card-link span {
+      transition: transform 180ms ease;
+    }
+
+    .service-card:hover .service-card-link span {
+      transform: translateX(5px);
+    }
+
+    .services-wordmark {
+      position: absolute;
+      z-index: 1;
+      left: 50%;
+      bottom: 390px;
+      width: 100%;
+      transform: translateX(-50%);
+      color: transparent;
+      -webkit-text-stroke: 2px rgba(205, 188, 229, 0.16);
+      text-align: center;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(110px, 16vw, 220px);
+      line-height: 0.72;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-shadow:
+        0 5px 0 rgba(205, 188, 229, 0.08),
+        0 10px 0 rgba(205, 188, 229, 0.05);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .how-section {
+      position: relative;
+      overflow: hidden;
+      z-index: 3;
+      width: 100%;
+      margin-top: 150px;
+      padding: 58px 24px 34px;
+      background: transparent;
+    }
+
+    .how-inner {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.7fr 0.72fr 0.72fr 1.18fr;
+      gap: 56px;
+      padding-bottom: 62px;
+    }
+
+    .footer-brand {
+      display: inline-block;
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      text-decoration: none;
+    }
+
+    .footer-about {
+      max-width: 390px;
+      margin-top: 22px;
+      color: #bdccc2;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 9px;
+      margin-top: 24px;
+    }
+
+    .footer-social a {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 50%;
+      color: #dce8df;
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .footer-social a:hover {
+      transform: translateY(-3px);
+      background: #86caa2;
+      color: #102619;
+    }
+
+    .footer-column h3,
+    .footer-newsletter h3 {
+      margin-bottom: 20px;
+      color: #ffffff;
+      font-size: 17px;
+    }
+
+    .footer-column a {
+      display: block;
+      margin-top: 13px;
+      color: #bdccc2;
+      font-size: 14px;
+      text-decoration: none;
+      transition: color 180ms ease, transform 180ms ease;
+    }
+
+    .footer-column a:hover {
+      color: #86caa2;
+      transform: translateX(4px);
+    }
+
+    .footer-newsletter p {
+      color: #bdccc2;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .newsletter-form {
+      display: flex;
+      margin-top: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 10px;
+      background: rgba(255,255,255,.055);
+      padding: 5px;
+    }
+
+    .newsletter-form input {
+      min-width: 0;
+      flex: 1;
+      height: 42px;
+      border: 0;
+      outline: 0;
+      padding: 0 12px;
+      background: transparent;
+      color: #ffffff;
+      font: inherit;
+      font-size: 13px;
+    }
+
+    .newsletter-form input::placeholder { color: #91a398; }
+
+    .newsletter-form button {
+      height: 42px;
+      border: 0;
+      border-radius: 7px;
+      padding: 0 14px;
+      background: #86caa2;
+      color: #102619;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .newsletter-status {
+      min-height: 18px;
+      margin-top: 8px;
+      color: #86caa2;
+      font-size: 12px;
+    }
+
+    .footer-bottom {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      color: #96a89d;
+      font-size: 13px;
+    }
+
+    .footer-bottom strong { color: #dfe9e3; }
+
+    @media (max-width: 760px) {
+      header {
+        width: 100%;
+        height: 82px;
+        padding: 0 16px;
+      }
+
+      .brand-name {
+        font-size: 24px;
+      }
+
+      .menu-button {
+        display: grid;
+        place-items: center;
+      }
+
+      nav {
+        position: absolute;
+        top: 72px;
+        left: 16px;
+        right: 16px;
+        display: none;
+        align-items: stretch;
+        gap: 4px;
+        padding: 12px;
+        border: 1px solid #dfece4;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow: 0 18px 50px rgba(34, 81, 55, 0.12);
+        backdrop-filter: blur(12px);
+      }
+
+      nav.open {
+        display: flex;
+        flex-direction: column;
+      }
+
+      nav a,
+      nav a.login {
+        padding: 12px 14px;
+        border: 0;
+        border-radius: 10px;
+        text-align: center;
+      }
+
+      nav a:hover,
+      nav a.active,
+      nav a.login:hover {
+        background: var(--green-soft);
+      }
+
+      nav a::after {
+        display: none;
+      }
+
+      main {
+        width: min(100% - 32px, 1180px);
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 120px 0 60px;
+        text-align: center;
+      }
+
+      .hero-content {
+        margin: 0 auto;
+      }
+
+      h1 {
+        font-size: clamp(42px, 13vw, 58px);
+        letter-spacing: -3px;
+      }
+
+      .hero-description {
+        font-size: 16px;
+      }
+
+      .hero-actions,
+      .hero-proof {
+        justify-content: center;
+      }
+
+      .email-signup,
+      .email-status {
+        width: 100%;
+      }
+
+      .email-signup button {
+        padding: 0 14px;
+      }
+
+      .finance-visual {
+        min-height: 360px;
+      }
+
+      .hero-photo-wrap {
+        left: 50%;
+        right: auto;
+        width: min(330px, calc(100% - 36px));
+        height: 330px;
+        transform: translateX(-50%);
+      }
+
+      .savings-card {
+        left: 0;
+        top: 55px;
+        width: 180px;
+      }
+
+      .growth-card {
+        right: 0;
+        bottom: 18px;
+        width: 165px;
+      }
+
+      .leaf-badge {
+        left: 12px;
+        bottom: 8px;
+      }
+
+      .metrics-inner {
+        width: min(100% - 32px, 1180px);
+        grid-template-columns: repeat(2, 1fr);
+        padding: 24px 0;
+      }
+
+      .metric {
+        min-height: 92px;
+        padding: 12px 18px;
+        text-align: left;
+      }
+
+      .metric:first-child {
+        padding-left: 18px;
+      }
+
+      .metric:nth-child(2) {
+        border-right: 0;
+      }
+
+      .metric:nth-child(-n + 2) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .metric-value {
+        font-size: 30px;
+      }
+
+      .metric-label {
+        font-size: 12px;
+      }
+
+      .planning-section {
+        padding: 64px 0;
+      }
+
+      .planning-inner {
+        width: min(100% - 32px, 1180px);
+        grid-template-columns: 1fr;
+      }
+
+      .why-section {
+        padding: 72px 0;
+      }
+
+      .why-inner {
+        width: min(100% - 32px, 1180px);
+        grid-template-columns: 1fr;
+        gap: 38px;
+      }
+
+      .market-panel {
+        min-height: 380px;
+      }
+
+      .why-copy h2 {
+        font-size: clamp(42px, 12vw, 56px);
+      }
+
+      .why-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .contact-section {
+        padding: 0 16px 64px;
+      }
+
+      .contact-pallet {
+        min-height: 260px;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 24px;
+        padding: 36px 28px;
+      }
+
+      .contact-button {
+        width: 100%;
+      }
+
+      .services-section {
+        min-height: 980px;
+        padding: 68px 16px 0;
+      }
+
+      .services-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 26px;
+      }
+
+      .services-heading h2 {
+        font-size: clamp(38px, 11vw, 50px);
+      }
+
+      .service-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .service-card {
+        min-height: 230px;
+        padding: 18px;
+      }
+
+      .service-card h3 {
+        font-size: 20px;
+      }
+
+      .services-wordmark {
+        bottom: 620px;
+        font-size: clamp(78px, 23vw, 110px);
+        line-height: 0.82;
+        -webkit-text-stroke-width: 1.5px;
+      }
+
+      .how-section {
+        padding: 64px 16px 28px;
+        margin-top: 100px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 38px 20px;
+        padding-bottom: 42px;
+      }
+
+      .footer-intro,
+      .footer-newsletter {
+        grid-column: 1 / -1;
+      }
+
+      .footer-about {
+        max-width: 100%;
+      }
+
+      .footer-bottom {
+        min-height: 82px;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        gap: 6px;
+      }
+
+      .retirement-card,
+      .investment-card {
+        min-height: 430px;
+        padding: 28px;
+      }
+
+      .retirement-card h2,
+      .investment-card h2 {
+        font-size: clamp(34px, 10vw, 44px);
+      }
+
+      .retirement-chart,
+      .investment-animation {
+        left: 28px;
+        right: 28px;
+        bottom: 28px;
+      }
+
+      .growth-orbit {
+        right: -12px;
+      }
+
+      .growth-core {
+        right: 52px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .shape {
+        animation: none;
+      }
+
+      .scroll-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      .chart-line,
+      .chart-area,
+      .chart-point,
+      .growth-orbit,
+      .growth-core,
+      .growth-bars span {
+        animation: none;
+      }
+
+      .chart-line {
+        stroke-dashoffset: 0;
+      }
+
+      .chart-area {
+        opacity: 1;
+      }
+
+      .market-line {
+        stroke-dashoffset: 0;
+      }
+
+      .market-fill {
+        opacity: 1;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="verdant-pages.css">
+</head>
+<body>
+  <div class="animated-background" aria-hidden="true">
+    <div class="shape shape-one"></div>
+    <div class="shape shape-two"></div>
+    <div class="shape shape-three"></div>
+  </div>
+
+  <header>
+    <a class="brand" href="Home.html" aria-label="Verdant home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none">
+          <path d="M17 27C16.7 20.2 19.4 14.2 25.9 8.7C26.5 8.2 27.4 8.7 27.3 9.5C26.5 17.2 23.1 22.5 17.9 26.1" fill="#DDF5E5"/>
+          <path d="M15.4 27C14.9 21.5 12.1 17.3 6.8 14.1C6.1 13.7 5.3 14.3 5.5 15.1C6.8 21.3 10.2 25.4 15.4 27Z" fill="#FFFFFF"/>
+          <path d="M16.2 27V12.8" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brand-name">Verdant</span>
+    </a>
+
+    <button class="menu-button" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+    <nav aria-label="Main navigation">
+      <a class="active" href="Home.html">Home</a>
+      <a href="#service-solutions">Services</a>
+      <a href="Support.html">Customer Support</a>
+      <a class="login" href="Login.html">Login</a>
+    </nav>
+  </header>
+
+  <main id="home">
+    <section class="hero-content" aria-labelledby="hero-title">
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        Finance made clearer
+      </div>
+
+      <h1 id="hero-title">Grow your money with <span>confidence.</span></h1>
+
+      <p class="hero-description">
+        Verdant brings saving, investing, and everyday financial planning together
+        in one simple platform. Get clear guidance, flexible plans, and personal
+        support to build a stronger financial future.
+      </p>
+
+      <div class="hero-actions">
+        <a class="button button-primary" href="Services.html">Explore plans <span aria-hidden="true">→</span></a>
+        <a class="button button-secondary" href="Support.html">Talk to an advisor</a>
+      </div>
+
+      <form class="email-signup" id="email-signup">
+        <label for="customer-email" class="visually-hidden">Email address</label>
+        <input id="customer-email" name="email" type="email" placeholder="Enter your email" required>
+        <button type="submit">Submit</button>
+      </form>
+      <p class="email-status" id="email-status" role="status" aria-live="polite"></p>
+
+      <div class="hero-proof" aria-label="Verdant benefits">
+        <div class="proof-item"><strong>24/7</strong><span>Expert support</span></div>
+        <span class="proof-divider" aria-hidden="true"></span>
+        <div class="proof-item"><strong>100%</strong><span>Secure platform</span></div>
+      </div>
+    </section>
+
+    <div class="finance-visual" aria-label="Happy Verdant customer">
+      <div class="hero-photo-wrap">
+        <img
+          class="hero-photo"
+          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&amp;fit=crop&amp;w=900&amp;q=85"
+          alt="Happy Verdant customer smiling"
+        >
+      </div>
+
+      <div class="float-card savings-card">
+        <span class="float-label">Savings goal</span>
+        <strong class="float-value">$24,800</strong>
+      </div>
+
+      <div class="float-card growth-card">
+        <span class="float-label">Monthly growth</span>
+        <strong class="float-value">+12.8%</strong>
+      </div>
+
+      <div class="leaf-badge" aria-hidden="true">♧</div>
+    </div>
+  </main>
+
+  <section class="company-metrics" aria-label="Verdant company statistics">
+    <div class="metrics-inner">
+      <div class="metric">
+        <strong class="metric-value">150+</strong>
+        <span class="metric-label">Expert Team Members</span>
+      </div>
+      <div class="metric">
+        <strong class="metric-value">$3.5B+</strong>
+        <span class="metric-label">Total Assets Under Management</span>
+      </div>
+      <div class="metric">
+        <strong class="metric-value">270+</strong>
+        <span class="metric-label">Projects Completed</span>
+      </div>
+      <div class="metric">
+        <strong class="metric-value">99%</strong>
+        <span class="metric-label">Customer Satisfaction</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="planning-section" id="services" aria-label="Verdant financial planning">
+    <div class="planning-inner">
+      <article class="retirement-card">
+        <div class="card-brand" aria-label="Verdant retirement plan">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <rect width="32" height="32" rx="9" fill="#167a4a"/>
+            <path d="M17 25C16.7 19.2 19.1 14.1 24.7 9.4C25.3 8.9 26.1 9.4 26 10.1C25.3 16.7 22.4 21.2 17.9 24.3" fill="#DDF5E5"/>
+            <path d="M15.4 25C14.9 20.3 12.5 16.7 8 14C7.3 13.6 6.6 14.1 6.8 14.9C7.9 20.2 10.8 23.7 15.4 25Z" fill="#fff"/>
+          </svg>
+        </div>
+        <span class="section-kicker">Plan for tomorrow</span>
+        <h2>Secure <span>retirement.</span></h2>
+        <p class="card-description">
+          Build a retirement portfolio that grows steadily, adapts to your goals,
+          and gives you more freedom in the years ahead.
+        </p>
+        <a class="plan-link" href="Services.html">Explore retirement plans <span aria-hidden="true">→</span></a>
+
+        <div class="retirement-chart" aria-label="Retirement savings growth chart">
+          <div class="chart-heading">
+            <div>
+              Retirement goal
+              <strong>$1.24M</strong>
+            </div>
+            <span>On track +18%</span>
+          </div>
+          <svg viewBox="0 0 420 150" role="img" aria-label="Savings growing toward the retirement goal">
+            <defs>
+              <linearGradient id="retirementFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#78bc94" stop-opacity="0.38"/>
+                <stop offset="100%" stop-color="#78bc94" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <line class="chart-grid" x1="0" y1="38" x2="420" y2="38"/>
+            <line class="chart-grid" x1="0" y1="78" x2="420" y2="78"/>
+            <line class="chart-grid" x1="0" y1="118" x2="420" y2="118"/>
+            <path class="chart-area" d="M0 118 C45 112 62 98 105 102 S170 86 210 88 S270 58 310 66 S370 28 420 22 L420 150 L0 150 Z"/>
+            <path class="chart-line" d="M0 118 C45 112 62 98 105 102 S170 86 210 88 S270 58 310 66 S370 28 420 22"/>
+            <circle class="chart-point" cx="210" cy="88" r="6"/>
+            <circle class="chart-point" cx="420" cy="22" r="7"/>
+          </svg>
+        </div>
+      </article>
+
+      <article class="investment-card">
+        <div class="card-brand" aria-label="Verdant investment plan">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <rect width="32" height="32" rx="9" fill="#86caa2"/>
+            <path d="M17 25C16.7 19.2 19.1 14.1 24.7 9.4C25.3 8.9 26.1 9.4 26 10.1C25.3 16.7 22.4 21.2 17.9 24.3" fill="#FFFFFF"/>
+            <path d="M15.4 25C14.9 20.3 12.5 16.7 8 14C7.3 13.6 6.6 14.1 6.8 14.9C7.9 20.2 10.8 23.7 15.4 25Z" fill="#DDF5E5"/>
+          </svg>
+        </div>
+        <span class="section-kicker">Build your future</span>
+        <h2>Invest with <span>potential.</span></h2>
+        <p class="card-description">
+          Put your money to work with diversified strategies designed for
+          confident growth and long-term value.
+        </p>
+        <a class="plan-link" href="Services.html">View investment options <span aria-hidden="true">→</span></a>
+
+        <div class="investment-animation" aria-label="Animated investment growth visualization">
+          <div class="growth-bars" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="growth-orbit" aria-hidden="true"></div>
+          <div class="growth-core">+18%</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="why-section" aria-label="Why choose Verdant">
+    <div class="why-inner">
+      <div class="market-panel">
+        <div class="market-heading">
+          <div>
+            <span>Verdant Market Index</span>
+            <strong>8,642.18</strong>
+          </div>
+          <span class="market-change">+2.48%</span>
+        </div>
+
+        <div class="market-chart" aria-label="Financial market index trend">
+          <svg viewBox="0 0 430 220" role="img" aria-label="Verdant market index increasing">
+            <defs>
+              <linearGradient id="marketFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#167a4a" stop-opacity="0.22"/>
+                <stop offset="100%" stop-color="#167a4a" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <line class="grid-line" x1="0" y1="55" x2="430" y2="55"/>
+            <line class="grid-line" x1="0" y1="110" x2="430" y2="110"/>
+            <line class="grid-line" x1="0" y1="165" x2="430" y2="165"/>
+            <path class="market-fill" d="M0 178 C32 168 48 174 78 150 S128 154 155 124 S210 136 238 102 S286 112 316 78 S376 74 430 36 L430 220 L0 220 Z"/>
+            <path class="market-line" d="M0 178 C32 168 48 174 78 150 S128 154 155 124 S210 136 238 102 S286 112 316 78 S376 74 430 36"/>
+          </svg>
+        </div>
+        <span class="market-note">Market view · Updated daily</span>
+      </div>
+
+      <div class="why-copy">
+        <span class="section-kicker">Why choose us</span>
+        <h2>Financial clarity.<br><span>Built around you.</span></h2>
+        <p>
+          Verdant combines clear market insight, disciplined investment strategies,
+          and personal support to help you make confident decisions at every stage
+          of your financial journey.
+        </p>
+
+        <div class="why-grid">
+          <a class="why-card" href="InvestorRelations.html">
+            <span class="why-card-icon" aria-hidden="true">IR</span>
+            <span class="why-card-title">Investor relations <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="why-card" href="CorporateCalendar.html">
+            <span class="why-card-icon" aria-hidden="true">31</span>
+            <span class="why-card-title">Corporate calendar <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="why-card" href="Sustainability.html">
+            <span class="why-card-icon" aria-hidden="true">♧</span>
+            <span class="why-card-title">Sustainability <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="why-card" href="AnnualReporting.html">
+            <span class="why-card-icon" aria-hidden="true">AR</span>
+            <span class="why-card-title">Annual reporting <span aria-hidden="true">→</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section" aria-label="Contact Verdant">
+    <div class="contact-pallet">
+      <div class="contact-copy">
+        <span>Ready to move forward?</span>
+        <h2>Let’s build your financial future.</h2>
+      </div>
+      <a class="contact-button" href="Enquiry.html">
+        Contact us <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="services-section" id="service-solutions" aria-label="Verdant services">
+    <div class="services-inner">
+      <div class="services-heading">
+        <h2>Solutions for every <span>financial stage.</span></h2>
+        <p>
+          Practical expertise, thoughtful protection, and personalized guidance
+          designed to help you move forward with confidence.
+        </p>
+      </div>
+
+      <div class="service-grid">
+        <article class="service-card">
+          <span class="service-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="10" stroke="#CBB2EE" stroke-width="2"/>
+              <path d="M16 6V26M6 16H26" stroke="#CBB2EE" stroke-width="2" stroke-linecap="round"/>
+              <path d="M16 11C18.8 11 21 13.2 21 16C21 18.8 18.8 21 16 21" stroke="#86CAA2" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <div>
+            <h3>Retirement Solutions</h3>
+            <p>Build a secure, flexible plan for life beyond work.</p>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <span class="service-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M16 5L25 9V15C25 21 21.4 25.2 16 27C10.6 25.2 7 21 7 15V9L16 5Z" stroke="#CBB2EE" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M12 16L15 19L21 12" stroke="#86CAA2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <div>
+            <h3>Fraud &amp; Protect</h3>
+            <p>Monitor, prevent, and respond to financial threats.</p>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <span class="service-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M7 24V12M16 24V7M25 24V14" stroke="#CBB2EE" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M4 24H28" stroke="#86CAA2" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="16" cy="7" r="2.5" fill="#86CAA2"/>
+            </svg>
+          </span>
+          <div>
+            <h3>Risk &amp; Compliance</h3>
+            <p>Navigate changing requirements with confidence.</p>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <span class="service-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M7 23L12.5 17L17 20.5L25 10" stroke="#CBB2EE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M19 10H25V16" stroke="#86CAA2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="7" cy="23" r="2" fill="#86CAA2"/>
+            </svg>
+          </span>
+          <div>
+            <h3>Wealth Management</h3>
+            <p>Grow, preserve, and transfer your wealth with purpose.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="services-wordmark" aria-hidden="true">SERVICES</div>
+
+  <section class="how-section" aria-label="Verdant footer">
+    <div class="how-inner">
+      <div class="footer-grid">
+        <div class="footer-intro">
+          <a class="footer-brand" href="Home.html" aria-label="Verdant home">Verdant</a>
+          <p class="footer-about">
+            The future is fast approaching, and your financial future deserves
+            clear guidance, responsible strategies, and support you can trust.
+          </p>
+          <div class="footer-social" aria-label="Verdant social media">
+            <a href="#" aria-label="Facebook">f</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="Instagram">ig</a>
+            <a href="#" aria-label="X">x</a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h3>Pages</h3>
+          <a href="Home.html">About us</a>
+          <a href="AnnualReporting.html">Reports</a>
+          <a href="Support.html">FAQ’s</a>
+          <a href="Enquiry.html">Contact</a>
+          <a href="Support.html">Support</a>
+        </div>
+
+        <div class="footer-column">
+          <h3>Primary pages</h3>
+          <a href="#service-solutions">Services</a>
+          <a href="CorporateCalendar.html">Careers</a>
+          <a href="Services.html">Pricing plans</a>
+          <a href="InvestorRelations.html">Portfolio</a>
+          <a href="AnnualReporting.html">News</a>
+        </div>
+
+        <div class="footer-newsletter">
+          <h3>Subscribe newsletter</h3>
+          <p>Receive clear financial insights and Verdant updates in your inbox.</p>
+          <form class="newsletter-form" id="newsletter-form">
+            <input type="email" name="newsletterEmail" placeholder="Email address" required>
+            <button type="submit">Subscribe</button>
+          </form>
+          <p class="newsletter-status" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>Copyright © 2026 <strong>Verdant</strong>. All rights reserved.</p>
+        <p>Privacy policy&nbsp;&nbsp; · &nbsp;&nbsp;Terms of use</p>
+      </div>
+    </div>
+  </section>
+  </section>
+
+  <script>
+    const menuButton = document.querySelector(".menu-button");
+    const navigation = document.querySelector("nav");
+    const header = document.querySelector("header");
+
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+
+    const resetHomePosition = () => {
+      if (window.location.hash) {
+        history.replaceState(null, "", window.location.pathname);
+      }
+      window.scrollTo(0, 0);
+      requestAnimationFrame(() => window.scrollTo(0, 0));
+      setTimeout(() => window.scrollTo(0, 0), 50);
+    };
+
+    window.addEventListener("load", resetHomePosition);
+    window.addEventListener("pageshow", resetHomePosition);
+
+    const revealTargets = document.querySelectorAll("main, section");
+    revealTargets.forEach((target) => target.classList.add("scroll-reveal"));
+
+    if ("IntersectionObserver" in window) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
+      });
+
+      revealTargets.forEach((target) => revealObserver.observe(target));
+    } else {
+      revealTargets.forEach((target) => target.classList.add("revealed"));
+    }
+
+    window.addEventListener("scroll", () => {
+      header.classList.toggle("scrolled", window.scrollY > 24);
+    }, { passive: true });
+
+    menuButton.addEventListener("click", () => {
+      const isOpen = navigation.classList.toggle("open");
+      menuButton.setAttribute("aria-expanded", isOpen);
+      menuButton.textContent = isOpen ? "×" : "☰";
+    });
+
+    document.querySelectorAll("nav a").forEach((link) => {
+      link.addEventListener("click", () => {
+        document.querySelectorAll("nav a").forEach((item) => item.classList.remove("active"));
+        link.classList.add("active");
+        navigation.classList.remove("open");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.textContent = "☰";
+      });
+    });
+
+    const emailSignup = document.querySelector("#email-signup");
+    const emailStatus = document.querySelector("#email-status");
+
+    emailSignup.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const emailInput = emailSignup.querySelector("input");
+      emailStatus.textContent = `Thank you! We’ll contact you at ${emailInput.value}.`;
+      emailSignup.reset();
+    });
+
+    const newsletterForm = document.querySelector("#newsletter-form");
+    const newsletterStatus = document.querySelector(".newsletter-status");
+
+    newsletterForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      newsletterStatus.textContent = "You’re subscribed to Verdant updates.";
+      newsletterForm.reset();
+    });
+
+    document.querySelectorAll(".footer-social a").forEach((socialLink) => {
+      socialLink.addEventListener("click", (event) => event.preventDefault());
+    });
+  </script>
+  <script src="verdant-app.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verdant - Login</title>
+  <style>
+    :root { --green:#167a4a; --green-dark:#0d5c37; --text:#153126; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { min-height:100vh; font-family:Inter,"Segoe UI",Arial,sans-serif; color:var(--text); background:linear-gradient(135deg,#fff 0%,#f7fcf9 100%); }
+    header { width:min(1180px,calc(100% - 48px)); height:96px; margin:auto; display:flex; align-items:center; justify-content:space-between; }
+    .brand { display:inline-flex; align-items:center; gap:11px; color:var(--green-dark); text-decoration:none; }
+    .brand-mark { width:42px; height:42px; display:grid; place-items:center; border-radius:12px; background:var(--green); }
+    .brand-name { font-size:27px; font-weight:750; letter-spacing:-1px; }
+    nav { display:flex; align-items:center; gap:34px; }
+    nav a { color:#51635a; text-decoration:none; font-size:15px; font-weight:650; }
+    nav a.login { padding:12px 22px; border:1px solid var(--green); border-radius:999px; background:var(--green); color:#fff; }
+    main { width:min(1180px,calc(100% - 48px)); margin:70px auto; display:grid; place-items:start center; }
+    .login-card { width:min(420px,100%); padding:36px; border:1px solid #dceae2; border-radius:24px; background:rgba(255,255,255,.92); box-shadow:0 24px 70px rgba(47,112,75,.12); }
+    h1 { margin-bottom:24px; font-size:38px; letter-spacing:-2px; }
+    .role-switch { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:22px; padding:5px; border-radius:12px; background:#edf7f1; }
+    .role-button { height:42px; margin:0; border:0; border-radius:8px; background:transparent; color:#607168; font:inherit; font-size:14px; font-weight:800; cursor:pointer; }
+    .role-button.active { background:#167a4a; color:#fff; box-shadow:0 8px 18px rgba(22,122,74,.14); }
+    .role-note { min-height:18px; margin-top:10px; color:#66776e; font-size:12px; line-height:1.5; }
+    .forgot-link { display:block; margin-top:12px; border:0; background:transparent; color:#167a4a; font:inherit; font-size:13px; font-weight:750; cursor:pointer; text-align:right; }
+    .reset-panel { display:none; margin-top:18px; padding-top:18px; border-top:1px solid #e1ebe4; }
+    .reset-panel.open { display:block; }
+    .verification-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .reset-panel input, .reset-panel select { height:46px; }
+    .reset-panel select { width:100%; border:1px solid #d7e5dd; border-radius:10px; padding:0 12px; background:#fff; font:inherit; }
+    .small-button { width:100%; height:44px; margin-top:12px; border:0; border-radius:9px; background:#eaf7ef; color:#0d5c37; font:inherit; font-size:13px; font-weight:800; cursor:pointer; }
+    .password-hint { margin-top:8px; color:#66776e; font-size:11px; line-height:1.45; }
+    label { display:block; margin:16px 0 8px; font-size:14px; font-weight:700; }
+    input { width:100%; height:50px; padding:0 14px; border:1px solid #d7e5dd; border-radius:10px; font:inherit; }
+    button { width:100%; height:52px; margin-top:24px; border:0; border-radius:10px; background:var(--green); color:#fff; font:inherit; font-weight:750; cursor:pointer; }
+  </style>
+    <link rel="stylesheet" href="verdant-pages.css">
+  </head>
+<body>
+  <header>
+    <a class="brand" href="Home.html" aria-label="Verdant home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="27" height="27" viewBox="0 0 32 32" fill="none">
+          <path d="M17 27C16.7 20.2 19.4 14.2 25.9 8.7C26.5 8.2 27.4 8.7 27.3 9.5C26.5 17.2 23.1 22.5 17.9 26.1" fill="#DDF5E5"/>
+          <path d="M15.4 27C14.9 21.5 12.1 17.3 6.8 14.1C6.1 13.7 5.3 14.3 5.5 15.1C6.8 21.3 10.2 25.4 15.4 27Z" fill="#fff"/>
+        </svg>
+      </span>
+      <span class="brand-name">Verdant</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="Home.html">Home</a>
+      <a href="Services.html">Services</a>
+      <a href="Support.html">Customer Support</a>
+      <a class="login" href="Login.html">Login</a>
+    </nav>
+  </header>
+  <main>
+    <form class="login-card">
+      <h1>Welcome back</h1>
+      <div class="role-switch" role="tablist" aria-label="Login type">
+        <button class="role-button active" type="button" role="tab" aria-selected="true" data-role="customer">Customer</button>
+        <button class="role-button" type="button" role="tab" aria-selected="false" data-role="admin">Admin</button>
+      </div>
+      <input id="login-role" name="loginRole" type="hidden" value="customer">
+      <div id="customer-fields">
+        <label for="email">Email address</label>
+        <input id="email" type="email" placeholder="you@example.com" required>
+        <label for="password">Password</label>
+        <input id="password" type="password" placeholder="Enter your password" minlength="8" required>
+      </div>
+      <div id="admin-fields" hidden>
+        <label for="username">Admin username</label>
+        <input id="username" type="text" placeholder="Enter admin username" autocomplete="username">
+        <label for="admin-password">Admin password</label>
+        <input id="admin-password" name="adminPassword" type="password" placeholder="Enter strong password" autocomplete="current-password">
+        <p class="password-hint">Admin password must include uppercase, lowercase, and a symbol.</p>
+      </div>
+      <p class="role-note" id="role-note">Customer login redirects to the Verdant home page.</p>
+      <button class="forgot-link" id="forgot-password" type="button">Forgot password?</button>
+      <div class="reset-panel" id="reset-panel">
+        <label for="verification-method">Verify with</label>
+        <select id="verification-method">
+          <option value="email">Email address</option>
+          <option value="mobile">Mobile number</option>
+        </select>
+        <label for="verification-value">Email or mobile number</label>
+        <input id="verification-value" type="text" placeholder="Enter recovery details">
+        <div class="verification-row">
+          <input id="verification-code" type="text" inputmode="numeric" maxlength="6" placeholder="Verification code">
+          <button class="small-button" id="send-code" type="button">Send code</button>
+        </div>
+        <button class="small-button" id="verify-reset" type="button">Verify &amp; continue</button>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  </main>
+  <script src="verdant-app.js"></script>
+</body>
+</html>

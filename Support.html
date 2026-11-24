@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verdant - Customer Support</title>
+  <style>
+    :root { --green:#167a4a; --green-dark:#0d5c37; --text:#153126; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { min-height:100vh; font-family:Inter,"Segoe UI",Arial,sans-serif; color:var(--text); background:linear-gradient(135deg,#fff 0%,#f7fcf9 100%); }
+    header { width:min(1180px,calc(100% - 48px)); height:96px; margin:auto; display:flex; align-items:center; justify-content:space-between; }
+    .brand { display:inline-flex; align-items:center; gap:11px; color:var(--green-dark); text-decoration:none; }
+    .brand-mark { width:42px; height:42px; display:grid; place-items:center; border-radius:12px; background:var(--green); }
+    .brand-name { font-size:27px; font-weight:750; letter-spacing:-1px; }
+    nav { display:flex; align-items:center; gap:34px; }
+    nav a { color:#51635a; text-decoration:none; font-size:15px; font-weight:650; }
+    nav a.active { color:var(--green); }
+    nav a.login { padding:12px 22px; border:1px solid var(--green); border-radius:999px; color:var(--green); }
+    main { width:min(1180px,calc(100% - 48px)); margin:0 auto; padding:150px 0 80px; }
+    h1 { max-width:680px; font-size:64px; line-height:1; letter-spacing:-3px; }
+    h1 span { color:var(--green); }
+    p { max-width:620px; margin-top:22px; color:#63736b; font-size:18px; line-height:1.7; }
+    .support-intro { max-width:720px; }
+    .support-search { width:min(620px,100%); height:58px; display:flex; align-items:center; gap:8px; margin-top:30px; padding:6px; border:1px solid #d5e5dc; border-radius:14px; background:#fff; box-shadow:0 14px 36px rgba(47,112,75,.09); }
+    .support-search input { min-width:0; flex:1; height:44px; border:0; outline:0; padding:0 12px; color:var(--text); font:inherit; }
+    .support-search button { height:44px; border:0; border-radius:9px; padding:0 18px; background:var(--green); color:#fff; font:inherit; font-weight:750; cursor:pointer; }
+    .support-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:44px; }
+    .support-card { min-height:240px; display:flex; flex-direction:column; justify-content:space-between; padding:24px; border:1px solid #dce9e1; border-radius:20px; background:rgba(255,255,255,.9); }
+    .support-icon { width:48px; height:48px; display:grid; place-items:center; border-radius:14px; background:#eaf7ef; color:var(--green); font-size:20px; font-weight:800; }
+    .support-card h2 { margin-top:24px; font-size:23px; letter-spacing:-1px; }
+    .support-card p { margin-top:8px; font-size:14px; line-height:1.65; }
+    .support-card a { margin-top:18px; color:var(--green); font-size:14px; font-weight:800; text-decoration:none; }
+    .advanced-section { margin-top:18px; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .advanced-panel { min-height:280px; padding:30px; border-radius:20px; }
+    .advanced-panel.technical { background:#102619; color:#fff; }
+    .advanced-panel.advisory { background:#edf7f1; border:1px solid #dce9e1; }
+    .advanced-panel h2 { font-size:30px; letter-spacing:-1.5px; }
+    .advanced-panel p { margin-top:12px; font-size:15px; line-height:1.7; }
+    .technical p { color:#bed0c4; }
+    .support-list { display:grid; gap:10px; margin-top:18px; }
+    .support-list span { display:flex; align-items:center; gap:9px; font-size:14px; }
+    .support-list span::before { content:""; width:7px; height:7px; border-radius:50%; background:#86caa2; }
+    .support-actions { display:flex; gap:10px; margin-top:24px; }
+    .support-actions a { height:46px; display:inline-flex; align-items:center; justify-content:center; border-radius:9px; padding:0 18px; text-decoration:none; font-size:14px; font-weight:800; }
+    .support-actions .primary { background:#86caa2; color:#102619; }
+    .support-actions .secondary { border:1px solid #167a4a; color:#167a4a; }
+    .faq { margin-top:18px; padding:30px; border:1px solid #dce9e1; border-radius:20px; background:#fff; }
+    .faq h2 { font-size:30px; letter-spacing:-1.5px; }
+    .faq-item { border-bottom:1px solid #edf1ee; }
+    .faq-item:last-child { border-bottom:0; }
+    .faq-button { width:100%; min-height:58px; display:flex; align-items:center; justify-content:space-between; border:0; background:transparent; color:var(--text); font:inherit; font-weight:750; text-align:left; cursor:pointer; }
+    .faq-answer { max-height:0; overflow:hidden; color:#66776e; font-size:14px; line-height:1.65; transition:max-height 240ms ease; }
+    .faq-answer p { margin:0 0 18px; font-size:14px; }
+    .faq-item.open .faq-answer { max-height:120px; }
+    .faq-item.open .faq-button span:last-child { transform:rotate(45deg); }
+    @media(max-width:760px){header{height:82px;padding:0 16px}.brand-name{font-size:24px}nav{display:none}main{width:min(100% - 32px,1180px);padding:118px 0 50px}h1{font-size:44px}.support-grid{grid-template-columns:1fr}.advanced-section{grid-template-columns:1fr}.support-actions{flex-direction:column}.support-actions a{width:100%}}
+  </style>
+    <link rel="stylesheet" href="verdant-pages.css">
+  </head>
+<body>
+  <header>
+    <a class="brand" href="Home.html" aria-label="Verdant home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="27" height="27" viewBox="0 0 32 32" fill="none">
+          <path d="M17 27C16.7 20.2 19.4 14.2 25.9 8.7C26.5 8.2 27.4 8.7 27.3 9.5C26.5 17.2 23.1 22.5 17.9 26.1" fill="#DDF5E5"/>
+          <path d="M15.4 27C14.9 21.5 12.1 17.3 6.8 14.1C6.1 13.7 5.3 14.3 5.5 15.1C6.8 21.3 10.2 25.4 15.4 27Z" fill="#fff"/>
+        </svg>
+      </span>
+      <span class="brand-name">Verdant</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="Home.html">Home</a>
+      <a href="Services.html">Services</a>
+      <a class="active" href="Support.html">Customer Support</a>
+      <a class="login" href="Login.html">Login</a>
+    </nav>
+  </header>
+  <main>
+    <section class="support-intro">
+      <h1>Helpful support, <span>whenever you need it.</span></h1>
+      <p>Find account help, technical guidance, and direct access to Verdant specialists whenever you need support.</p>
+      <form class="support-search" id="support-search">
+        <input type="search" placeholder="Search support topics" aria-label="Search support topics">
+        <button type="submit">Search</button>
+      </form>
+    </section>
+
+    <section class="support-grid" aria-label="Customer support services">
+      <article class="support-card">
+        <span class="support-icon" aria-hidden="true">24</span>
+        <h2>Customer care</h2>
+        <p>Get help with account access, payments, plan changes, profile information, and general questions.</p>
+        <a href="Enquiry.html">Contact customer care →</a>
+      </article>
+      <article class="support-card">
+        <span class="support-icon" aria-hidden="true">IT</span>
+        <h2>Technical support</h2>
+        <p>Resolve login issues, dashboard errors, mobile app problems, document access, and security alerts.</p>
+        <a href="#technical-support">View technical help →</a>
+      </article>
+      <article class="support-card">
+        <span class="support-icon" aria-hidden="true">AD</span>
+        <h2>Advanced assistance</h2>
+        <p>Speak with specialists about investments, retirement planning, portfolio risk, and complex accounts.</p>
+        <a href="#advanced-support">Speak with a specialist →</a>
+      </article>
+    </section>
+
+    <section class="advanced-section" aria-label="Advanced customer support">
+      <article class="advanced-panel technical" id="technical-support">
+        <h2>Technical support</h2>
+        <p>Our technical team provides guided troubleshooting and secure account assistance.</p>
+        <div class="support-list">
+          <span>Login and account recovery</span>
+          <span>Secure document and statement access</span>
+          <span>Two-step verification support</span>
+          <span>Website and mobile experience issues</span>
+        </div>
+        <div class="support-actions">
+          <a class="primary" href="Enquiry.html">Request technical help</a>
+        </div>
+      </article>
+
+      <article class="advanced-panel advisory" id="advanced-support">
+        <h2>Advanced financial support</h2>
+        <p>Connect with a financial specialist for in-depth planning and portfolio guidance.</p>
+        <div class="support-list">
+          <span>Investment and retirement reviews</span>
+          <span>Risk and portfolio analysis</span>
+          <span>Tax-aware planning guidance</span>
+          <span>Business and estate transition support</span>
+        </div>
+        <div class="support-actions">
+          <a class="primary" href="Enquiry.html">Book a specialist</a>
+          <a class="secondary" href="tel:+18005550384">Call support</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="faq" aria-label="Frequently asked questions">
+      <h2>Common support questions</h2>
+      <div class="faq-item">
+        <button class="faq-button" type="button"><span>How quickly can I receive support?</span><span aria-hidden="true">+</span></button>
+        <div class="faq-answer"><p>General enquiries are normally handled within one business day. Urgent security concerns are prioritized.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-button" type="button"><span>Can a specialist review my portfolio?</span><span aria-hidden="true">+</span></button>
+        <div class="faq-answer"><p>Yes. Request advanced support and an advisor will review your goals, holdings, and risk profile.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-button" type="button"><span>What should I do if I suspect fraud?</span><span aria-hidden="true">+</span></button>
+        <div class="faq-answer"><p>Contact Verdant immediately, secure your account credentials, and avoid sharing passwords or verification codes.</p></div>
+      </div>
+    </section>
+  </main>
+  <script>
+    const supportSearch = document.querySelector("#support-search");
+    supportSearch.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const topic = supportSearch.querySelector("input").value.trim();
+      if (!topic) {
+        supportSearch.querySelector("input").focus();
+        return;
+      }
+      const normalized = topic.toLowerCase();
+      if (normalized.includes("login") || normalized.includes("technical") || normalized.includes("security")) {
+        document.querySelector("#technical-support").scrollIntoView({ behavior: "smooth" });
+      } else if (normalized.includes("invest") || normalized.includes("portfolio") || normalized.includes("advisor")) {
+        document.querySelector("#advanced-support").scrollIntoView({ behavior: "smooth" });
+      } else {
+        document.querySelector(".faq").scrollIntoView({ behavior: "smooth" });
+      }
+    });
+
+    document.querySelectorAll(".faq-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        button.closest(".faq-item").classList.toggle("open");
+      });
+    });
+  </script>
+  <script src="verdant-app.js"></script>
+</body>
+</html>

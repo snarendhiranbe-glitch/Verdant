@@ -1,0 +1,109 @@
+:root {
+  --verdant-page-green: #167a4a;
+  --verdant-page-ink: #153126;
+}
+
+body {
+  background:
+    radial-gradient(circle at 88% 18%, rgba(171, 221, 188, 0.32), transparent 24rem),
+    radial-gradient(circle at 8% 78%, rgba(205, 237, 216, 0.38), transparent 18rem),
+    linear-gradient(135deg, #ffffff 0%, #f8fcf9 58%, #edf7f1 100%) !important;
+  background-size: 120% 120%, 110% 110%, 100% 100%;
+  animation: verdantPageFade 700ms ease-out both, verdantBackgroundDrift 16s ease-in-out infinite alternate;
+  overflow-x: hidden;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: verdantFloat 11s ease-in-out infinite;
+}
+
+body::before {
+  width: 260px;
+  height: 260px;
+  right: -90px;
+  bottom: 8%;
+  background: rgba(171, 217, 188, 0.16);
+}
+
+body::after {
+  width: 180px;
+  height: 180px;
+  left: -55px;
+  top: 28%;
+  background: rgba(211, 237, 220, 0.28);
+  animation-delay: -5s;
+}
+
+header {
+  position: fixed !important;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 96px !important;
+  margin: 0 !important;
+  padding: 0 max(24px, calc((100% - 1180px) / 2));
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-bottom: 1px solid rgba(219, 232, 224, 0.82);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 30px rgba(35, 82, 55, 0.055);
+}
+
+header nav a {
+  transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+header nav a:not(.login):hover {
+  color: var(--verdant-page-green);
+  transform: translateY(-1px);
+}
+
+main {
+  animation: verdantContentRise 850ms 100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes verdantPageFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes verdantContentRise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes verdantBackgroundDrift {
+  from { background-position: 0% 0%, 100% 100%, 0 0; }
+  to { background-position: 8% 4%, 92% 92%, 0 0; }
+}
+
+@keyframes verdantFloat {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-12px, -18px, 0) scale(1.08); }
+}
+
+@media (max-width: 760px) {
+  header {
+    height: 82px !important;
+    padding: 0 16px;
+  }
+
+  main {
+    padding-top: 118px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  main,
+  body::before,
+  body::after {
+    animation: none;
+  }
+}

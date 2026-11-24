@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verdant - Enquiry</title>
+  <style>
+    :root {
+      --green: #167a4a;
+      --green-dark: #0d5c37;
+      --green-soft: #eaf7ef;
+      --text: #153126;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(135deg, #f8fcf9 0%, #eef7f1 100%);
+    }
+
+    .background-shape {
+      position: fixed;
+      z-index: -1;
+      border-radius: 50%;
+      background: rgba(111, 183, 139, 0.14);
+      animation: float 9s ease-in-out infinite;
+    }
+
+    .shape-one { width: 280px; height: 280px; right: -90px; top: 110px; }
+    .shape-two { width: 190px; height: 190px; left: -70px; bottom: 70px; animation-delay: -4s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-18px) scale(1.05); }
+    }
+
+    header {
+      position: fixed;
+      z-index: 20;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 96px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 max(24px, calc((100% - 1180px) / 2));
+      background: rgba(255, 255, 255, 0.92);
+      border-bottom: 1px solid #e2ece6;
+      backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--green-dark);
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--green);
+    }
+
+    .brand-mark svg { width: 27px; height: 27px; }
+    .brand-name { font-size: 27px; font-weight: 750; letter-spacing: -1px; }
+
+    nav { display: flex; align-items: center; gap: 34px; }
+    nav a { color: #51635a; text-decoration: none; font-size: 15px; font-weight: 650; }
+    nav a.login { padding: 12px 22px; border: 1px solid var(--green); border-radius: 999px; color: var(--green); }
+
+    main {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 0.78fr 1.22fr;
+      align-items: center;
+      gap: 64px;
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 140px 0 70px;
+    }
+
+    .enquiry-copy h1 {
+      font-size: clamp(48px, 6vw, 72px);
+      line-height: 0.98;
+      letter-spacing: -4px;
+    }
+
+    .enquiry-copy h1 span { color: var(--green); }
+
+    .enquiry-copy p {
+      max-width: 480px;
+      margin-top: 22px;
+      color: #617269;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .enquiry-card {
+      padding: 38px;
+      border: 1px solid #dbe8e0;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 24px 70px rgba(47, 112, 75, 0.12);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field.full { grid-column: 1 / -1; }
+
+    label {
+      color: #51635a;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    input, select {
+      width: 100%;
+      height: 50px;
+      border: 1px solid #d7e5dd;
+      border-radius: 10px;
+      outline: none;
+      padding: 0 14px;
+      background: #ffffff;
+      color: var(--text);
+      font: inherit;
+      transition: border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #73ad8b;
+      box-shadow: 0 0 0 4px rgba(22, 122, 74, 0.08);
+    }
+
+    select {
+      appearance: auto;
+      cursor: pointer;
+    }
+
+    .phone-group {
+      display: grid;
+      grid-template-columns: 145px 1fr;
+      gap: 10px;
+    }
+
+    .phone-code {
+      min-width: 145px;
+      padding: 0 10px;
+      font-size: 14px;
+    }
+
+    .submit-button {
+      width: auto;
+      min-width: 160px;
+      height: 48px;
+      display: block;
+      margin: 22px auto 0;
+      border: 0;
+      border-radius: 11px;
+      background: var(--green);
+      color: var(--white);
+      font: inherit;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 180ms ease, background 180ms ease;
+    }
+
+    .submit-button:hover { background: var(--green-dark); transform: translateY(-2px); }
+    .form-status { min-height: 18px; margin-top: 10px; color: var(--green); font-size: 13px; font-weight: 700; text-align: center; }
+
+    @media (max-width: 760px) {
+      header { height: 82px; padding: 0 16px; }
+      .brand-name { font-size: 24px; }
+      nav { display: none; }
+      main { width: min(100% - 32px, 1180px); grid-template-columns: 1fr; gap: 32px; padding: 118px 0 50px; }
+      .enquiry-copy { text-align: center; }
+      .enquiry-copy h1 { font-size: 46px; letter-spacing: -3px; }
+      .enquiry-copy p { margin-inline: auto; font-size: 15px; }
+      .enquiry-card { padding: 24px 18px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .phone-group { grid-template-columns: 128px 1fr; }
+      .phone-code { min-width: 128px; padding: 0 6px; }
+      .submit-button { width: 100%; min-width: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .background-shape { animation: none; }
+    }
+  </style>
+  <link rel="stylesheet" href="verdant-pages.css">
+</head>
+<body>
+  <div class="background-shape shape-one" aria-hidden="true"></div>
+  <div class="background-shape shape-two" aria-hidden="true"></div>
+
+  <header>
+    <a class="brand" href="Home.html" aria-label="Verdant home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none">
+          <path d="M17 27C16.7 20.2 19.4 14.2 25.9 8.7C26.5 8.2 27.4 8.7 27.3 9.5C26.5 17.2 23.1 22.5 17.9 26.1" fill="#DDF5E5"/>
+          <path d="M15.4 27C14.9 21.5 12.1 17.3 6.8 14.1C6.1 13.7 5.3 14.3 5.5 15.1C6.8 21.3 10.2 25.4 15.4 27Z" fill="#FFFFFF"/>
+        </svg>
+      </span>
+      <span class="brand-name">Verdant</span>
+    </a>
+
+    <nav aria-label="Main navigation">
+      <a href="Home.html">Home</a>
+      <a href="Services.html">Services</a>
+      <a href="Support.html">Customer Support</a>
+      <a class="login" href="Login.html">Login</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="enquiry-copy">
+      <h1>Let’s start a <span>conversation.</span></h1>
+      <p>Share your details and a Verdant financial advisor will help you find the right plan for your goals.</p>
+    </section>
+
+    <form class="enquiry-card" id="enquiry-form">
+      <div class="form-grid">
+        <div class="field full">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field full">
+          <label for="phone">Contact number</label>
+          <div class="phone-group">
+            <select class="phone-code" id="phone-code" name="phoneCode" aria-label="Country calling code" required>
+              <option value="+1" selected>🇺🇸 +1</option>
+              <option value="+44">🇬🇧 +44</option>
+              <option value="+91">🇮🇳 +91</option>
+              <option value="+61">🇦🇺 +61</option>
+              <option value="+81">🇯🇵 +81</option>
+              <option value="+86">🇨🇳 +86</option>
+              <option value="+33">🇫🇷 +33</option>
+              <option value="+49">🇩🇪 +49</option>
+              <option value="+39">🇮🇹 +39</option>
+              <option value="+34">🇪🇸 +34</option>
+              <option value="+55">🇧🇷 +55</option>
+              <option value="+52">🇲🇽 +52</option>
+              <option value="+27">🇿🇦 +27</option>
+              <option value="+971">🇦🇪 +971</option>
+              <option value="+966">🇸🇦 +966</option>
+              <option value="+65">🇸🇬 +65</option>
+              <option value="+60">🇲🇾 +60</option>
+              <option value="+62">🇮🇩 +62</option>
+              <option value="+63">🇵🇭 +63</option>
+              <option value="+66">🇹🇭 +66</option>
+              <option value="+82">🇰🇷 +82</option>
+              <option value="+64">🇳🇿 +64</option>
+              <option value="+20">🇪🇬 +20</option>
+              <option value="+234">🇳🇬 +234</option>
+              <option value="+254">🇰🇪 +254</option>
+              <option value="+971">🇦🇪 +971</option>
+              <option value="+974">🇶🇦 +974</option>
+              <option value="+968">🇴🇲 +968</option>
+              <option value="+973">🇧🇭 +973</option>
+              <option value="+965">🇰🇼 +965</option>
+              <option value="+92">🇵🇰 +92</option>
+              <option value="+880">🇧🇩 +880</option>
+              <option value="+94">🇱🇰 +94</option>
+              <option value="+977">🇳🇵 +977</option>
+              <option value="+7">🇷🇺 +7</option>
+              <option value="+90">🇹🇷 +90</option>
+              <option value="+31">🇳🇱 +31</option>
+              <option value="+32">🇧🇪 +32</option>
+              <option value="+41">🇨🇭 +41</option>
+              <option value="+46">🇸🇪 +46</option>
+              <option value="+47">🇳🇴 +47</option>
+              <option value="+45">🇩🇰 +45</option>
+            </select>
+            <input id="phone" name="phone" type="tel" placeholder="555 000 0000" minlength="4" maxlength="20" pattern="[0-9][0-9 ]*" required>
+          </div>
+        </div>
+        <div class="field full">
+          <label for="address">Address</label>
+          <input id="address" name="address" type="text" placeholder="Street address" required>
+        </div>
+        <div class="field">
+          <label for="state">State</label>
+          <input id="state" name="state" type="text" placeholder="State" required>
+        </div>
+        <div class="field">
+          <label for="country">Country</label>
+          <select id="country" name="country" required>
+            <option value="" selected disabled>Select a country</option>
+            <option>Afghanistan</option>
+            <option>Albania</option>
+            <option>Algeria</option>
+            <option>Andorra</option>
+            <option>Angola</option>
+            <option>Antigua and Barbuda</option>
+            <option>Argentina</option>
+            <option>Armenia</option>
+            <option>Australia</option>
+            <option>Austria</option>
+            <option>Azerbaijan</option>
+            <option>Bahamas</option>
+            <option>Bahrain</option>
+            <option>Bangladesh</option>
+            <option>Barbados</option>
+            <option>Belarus</option>
+            <option>Belgium</option>
+            <option>Belize</option>
+            <option>Benin</option>
+            <option>Bhutan</option>
+            <option>Bolivia</option>
+            <option>Bosnia and Herzegovina</option>
+            <option>Botswana</option>
+            <option>Brazil</option>
+            <option>Brunei</option>
+            <option>Bulgaria</option>
+            <option>Burkina Faso</option>
+            <option>Burundi</option>
+            <option>Cambodia</option>
+            <option>Cameroon</option>
+            <option>Canada</option>
+            <option>Cape Verde</option>
+            <option>Central African Republic</option>
+            <option>Chad</option>
+            <option>Chile</option>
+            <option>China</option>
+            <option>Colombia</option>
+            <option>Comoros</option>
+            <option>Costa Rica</option>
+            <option>Cote d'Ivoire</option>
+            <option>Croatia</option>
+            <option>Cuba</option>
+            <option>Cyprus</option>
+            <option>Czech Republic</option>
+            <option>Democratic Republic of the Congo</option>
+            <option>Denmark</option>
+            <option>Djibouti</option>
+            <option>Dominica</option>
+            <option>Dominican Republic</option>
+            <option>Ecuador</option>
+            <option>Egypt</option>
+            <option>El Salvador</option>
+            <option>Equatorial Guinea</option>
+            <option>Eritrea</option>
+            <option>Estonia</option>
+            <option>Eswatini</option>
+            <option>Ethiopia</option>
+            <option>Fiji</option>
+            <option>Finland</option>
+            <option>France</option>
+            <option>Gabon</option>
+            <option>Gambia</option>
+            <option>Georgia</option>
+            <option>Germany</option>
+            <option>Ghana</option>
+            <option>Greece</option>
+            <option>Grenada</option>
+            <option>Guatemala</option>
+            <option>Guinea</option>
+            <option>Guinea-Bissau</option>
+            <option>Guyana</option>
+            <option>Haiti</option>
+            <option>Honduras</option>
+            <option>Hungary</option>
+            <option>Iceland</option>
+            <option>India</option>
+            <option>Indonesia</option>
+            <option>Iran</option>
+            <option>Iraq</option>
+            <option>Ireland</option>
+            <option>Israel</option>
+            <option>Italy</option>
+            <option>Jamaica</option>
+            <option>Japan</option>
+            <option>Jordan</option>
+            <option>Kazakhstan</option>
+            <option>Kenya</option>
+            <option>Kiribati</option>
+            <option>Kuwait</option>
+            <option>Kyrgyzstan</option>
+            <option>Laos</option>
+            <option>Latvia</option>
+            <option>Lebanon</option>
+            <option>Lesotho</option>
+            <option>Liberia</option>
+            <option>Libya</option>
+            <option>Liechtenstein</option>
+            <option>Lithuania</option>
+            <option>Luxembourg</option>
+            <option>Madagascar</option>
+            <option>Malawi</option>
+            <option>Malaysia</option>
+            <option>Maldives</option>
+            <option>Mali</option>
+            <option>Malta</option>
+            <option>Marshall Islands</option>
+            <option>Mauritania</option>
+            <option>Mauritius</option>
+            <option>Mexico</option>
+            <option>Micronesia</option>
+            <option>Moldova</option>
+            <option>Monaco</option>
+            <option>Mongolia</option>
+            <option>Montenegro</option>
+            <option>Morocco</option>
+            <option>Mozambique</option>
+            <option>Myanmar</option>
+            <option>Namibia</option>
+            <option>Nauru</option>
+            <option>Nepal</option>
+            <option>Netherlands</option>
+            <option>New Zealand</option>
+            <option>Nicaragua</option>
+            <option>Niger</option>
+            <option>Nigeria</option>
+            <option>North Korea</option>
+            <option>North Macedonia</option>
+            <option>Norway</option>
+            <option>Oman</option>
+            <option>Pakistan</option>
+            <option>Palau</option>
+            <option>Palestine</option>
+            <option>Panama</option>
+            <option>Papua New Guinea</option>
+            <option>Paraguay</option>
+            <option>Peru</option>
+            <option>Philippines</option>
+            <option>Poland</option>
+            <option>Portugal</option>
+            <option>Qatar</option>
+            <option>Republic of the Congo</option>
+            <option>Romania</option>
+            <option>Russia</option>
+            <option>Rwanda</option>
+            <option>Saint Kitts and Nevis</option>
+            <option>Saint Lucia</option>
+            <option>Saint Vincent and the Grenadines</option>
+            <option>Samoa</option>
+            <option>San Marino</option>
+            <option>Sao Tome and Principe</option>
+            <option>Saudi Arabia</option>
+            <option>Senegal</option>
+            <option>Serbia</option>
+            <option>Seychelles</option>
+            <option>Sierra Leone</option>
+            <option>Singapore</option>
+            <option>Slovakia</option>
+            <option>Slovenia</option>
+            <option>Solomon Islands</option>
+            <option>Somalia</option>
+            <option>South Africa</option>
+            <option>South Korea</option>
+            <option>South Sudan</option>
+            <option>Spain</option>
+            <option>Sri Lanka</option>
+            <option>Sudan</option>
+            <option>Suriname</option>
+            <option>Sweden</option>
+            <option>Switzerland</option>
+            <option>Syria</option>
+            <option>Taiwan</option>
+            <option>Tajikistan</option>
+            <option>Tanzania</option>
+            <option>Thailand</option>
+            <option>Timor-Leste</option>
+            <option>Togo</option>
+            <option>Tonga</option>
+            <option>Trinidad and Tobago</option>
+            <option>Tunisia</option>
+            <option>Turkey</option>
+            <option>Turkmenistan</option>
+            <option>Tuvalu</option>
+            <option>Uganda</option>
+            <option>Ukraine</option>
+            <option>United Arab Emirates</option>
+            <option>United Kingdom</option>
+            <option>United States</option>
+            <option>Uruguay</option>
+            <option>Uzbekistan</option>
+            <option>Vanuatu</option>
+            <option>Vatican City</option>
+            <option>Venezuela</option>
+            <option>Vietnam</option>
+            <option>Yemen</option>
+            <option>Zambia</option>
+            <option>Zimbabwe</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="submit-button" type="submit">Submit enquiry</button>
+      <p class="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+
+  <script src="verdant-app.js"></script>
+</body>
+</html>
